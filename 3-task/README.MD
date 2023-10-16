@@ -1,0 +1,39 @@
+# Task #3
+
+## Purpose
+Study the methods of analyzing the values of the calculation results to see if they fall within the range of acceptable values.
+
+## Task
+Summarize the numbers located in cells 0900h 0901h. Subtract the number located in cell 0902h from the sum obtained. Analyze the result and output to port 05 reporting information on the variants.
+
+## Variant
+| Allowable limits | True | False |
+|------------------|------|-------|
+| F7≤Y≤101         | 07   | 70    |
+
+## Listing
+| ADR | MC | LABEL | ASM | COMMENT |
+|------|----|-------|-------------|-|
+|      |        |             | ORG 0800H      |  |
+| 0800 | 210209 | INIT:       | LXI H,0902H    | POINTER INITIALIZATION |
+| 0803 |     4E |             | MOV C,M        | READ SUBTRACTOR |
+| 0804 |     2B |             | DCX H          | POINTER DECREMENT |
+| 0805 |     7E |             | MOV A,M        | READING THE SECOND SUMMAND |
+| 0806 |     2B |             | DCX H          | POINTER DECREMENT |
+| 0807 |     86 |             | ADD M          | ADDING THE SECOND SUMMAND TO THE FIRST SUMMAND |
+| 0808 | DA1208 |             | JC M0          | JUMP IF THE RESULTING NUMBER IS GREATER THAN FFH |
+| 080B |     91 |             | SUB C          | SUBTRACTION |
+| 080C | DA2308 |             | JC BAD         | JUMP IF THE RESULTING NUMBER IS NEGATIVE |
+| 080F | C31608 |             | JMP LESS_100   | JUMP TO CHECK THE NUMBER LESS THAN 100H |
+| 0812 |     91 | M0:         | SUB C          | SUBTRACTION |
+| 0813 | D21E08 |             | JNC GREATER_FF | JUMP IF THE NUMBER IS GREATER THAN FFH |
+| 0816 |   FEF7 | LESS_100:   | CPI 0F7H       | COMPARISON TO CHECK IF THE NUMBER IS OUTSIDE THE LEFTMOST BOUNDARY OF THE INTERVAL |
+| 0818 | DA2308 |             | JC BAD         | JUMP IF THE NUMBER IS OUTSIDE THE LIMITS |
+| 081B | C32808 |             | JMP GOOD       | OTHERWISE, PASS TO OUTPUT THE NUMBER OF SUCCESSFUL FULFILLMENT OF THE CONDITION |
+| 081E |   E6FE | GREATER_FF: | ANI 0FEH       | ALLOCATION OF ALL BITS EXCEPT THE FIRST ONE |
+| 0820 | CA2808 |             | JZ GOOD        | JUMP IF THE NUMBER IS EQUAL TO 100H OR 101H |
+| 0823 |   3E70 | BAD:        | MVI A,70H      | WRITING TO THE ACCUMULATOR THE NUMBER 70H WHEN THE RESULT IS NOT WITHIN THE INTERVAL. |
+| 0825 | C32A08 |             | JMP PRINT      | JUMP TO OUTPUT THE RESULT OF THE ANALYSIS TO PORT 05H |
+| 0828 |   3E07 | GOOD:       | MVI A,07H      | WRITE 07H TO THE ACCUMULATOR WHEN THE RESULT FALLS WITHIN THE INTERVAL. |
+| 082A |   D305 | PRINT:      | OUT 05H        | OUTPUT ANALYSIS RESULT TO PORT 05H |
+| 082C |     CF |             | RST 1          | STOP |
