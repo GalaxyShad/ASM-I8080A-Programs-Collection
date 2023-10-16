@@ -1,4 +1,4 @@
-# Task #5
+# Task #5 - "Resource management of the UMPK-80"
 
 ## Purpose
 Study the ways of controlling the stand resources at the system software level.

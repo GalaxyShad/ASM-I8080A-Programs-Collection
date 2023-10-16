@@ -1,4 +1,4 @@
-# Task #2
+# Task #2 - "Studying the commands of logical operations"
 
 ## Purpose
 Study the ways of analyzing the states of individual information bits and ways of controlling individual bits.

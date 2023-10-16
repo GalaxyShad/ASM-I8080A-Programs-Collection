@@ -1,4 +1,4 @@
-# Task #4
+# Task #4 - "Studying the principles of testing RAM"
 
 ## Purpose
 Studying one of the ways to test the operability of RAM.

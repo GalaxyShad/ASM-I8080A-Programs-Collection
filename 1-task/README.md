@@ -1,4 +1,4 @@
-# Task #1
+# Task #1 - "Studying the principles of array processing"
 
 ## Purpose
 Study the methods of array processing using pointers to access information.

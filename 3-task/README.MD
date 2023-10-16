@@ -1,4 +1,4 @@
-# Task #3
+# Task #3 - "Study of the principles of analyzing the results of calculations"
 
 ## Purpose
 Study the methods of analyzing the values of the calculation results to see if they fall within the range of acceptable values.
